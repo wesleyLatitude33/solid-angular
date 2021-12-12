@@ -1,22 +1,27 @@
+import { Inject } from "@angular/core";
 import { FormInputType } from "./form-input-type.class";
-import { inputTypeBase } from "./input-type.abstract";
+import { IInputType } from "./IInput-type.interface";
+import { inputType } from "./input-type.abstract";
+import { label } from "./label.class";
 
-export class dropdpown extends inputTypeBase{
+export class dropdpown extends inputType{
     
-    constructor(inputType: FormInputType){
+    constructor(@Inject('IFormInput') inputType: IInputType){
         super(inputType);
     }
 
     getInputType(): HTMLDivElement {
         const div = document.createElement('div');
 
-        const label = document.createElement('label');
-        label.setAttribute("for", this.inputType.key);
-        label.innerText = this.inputType.label;
-        div.appendChild(label);        
+        const labelType = new label(new FormInputType({
+            for: this.inputType.key,
+            label: this.inputType.label,
+            key: this.inputType.key}));
+        
+        div.appendChild(labelType.getInputType()); 
 
         const sel = document.createElement('select');
-        sel.className = 'custom-select';
+        sel.className = this.inputType.class;
         sel.id = this.inputType.key;
         sel.setAttribute('formControlName', this.inputType.key);
         div.appendChild(sel);
@@ -30,4 +35,5 @@ export class dropdpown extends inputTypeBase{
         
         return div;
     }
+
 }

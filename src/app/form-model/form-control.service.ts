@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormInputType } from '../form-input/input-type/form-input-type.class';
+import { IFormControl } from './IFormControl.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormControlService {
+export class FormControlService implements IFormControl {
 
   constructor() { }
 

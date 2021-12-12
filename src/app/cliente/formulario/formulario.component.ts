@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormInputType } from 'src/app/form-input/input-type/form-input-type.class';
+import { IFormFields } from '../IFormFields.interface';
 
 @Component({
   selector: 'app-formulario',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormularioComponent implements OnInit {
 
-  constructor() { }
+  iFormFields: FormInputType[] = [];
+  iservice: any;
+
+  constructor(@Inject('IClientToken') private service: IFormFields) { 
+    this.iservice = service;
+  }
 
   ngOnInit(): void {
+     this.iFormFields = this.iservice.getFormFields();
   }
 
 }

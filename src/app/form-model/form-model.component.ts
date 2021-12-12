@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormInputType } from '../form-input/input-type/form-input-type.class';
 import { FormControlService } from './form-control.service';
+import { IFormControl } from './IFormControl.interface';
 
 @Component({
   selector: 'app-form-model',
@@ -10,15 +11,14 @@ import { FormControlService } from './form-control.service';
 })
 export class FormModelComponent implements OnInit {
 
-  @Input() formFields: FormInputType[];
+  @Input() formFields: FormInputType[] = [];
   form: FormGroup;
   payload = '';
 
-  constructor(private formFieldService: FormControlService, fb: FormBuilder) {
+  constructor(@Inject('IFormControl') private formFieldService: IFormControl, fb: FormBuilder) {
     this.form = fb.group({
       title: fb.control('initial value')
     });
-    this.formFields = [];
    }
 
   ngOnInit(): void {

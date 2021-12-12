@@ -1,9 +1,12 @@
+import { Inject } from "@angular/core";
 import { FormInputType } from "./form-input-type.class";
-import { inputTypeBase } from "./input-type.abstract";
+import { IInputType } from "./IInput-type.interface";
+import { inputType } from "./input-type.abstract";
+import { label } from "./label.class";
 
-export class checkbox extends inputTypeBase{
-    
-    constructor(inputType: FormInputType){
+export class checkbox extends inputType{
+
+    constructor(@Inject('IFormInput') inputType: IInputType){
         super(inputType);
     }
 
@@ -14,20 +17,23 @@ export class checkbox extends inputTypeBase{
         div2.className = 'form-check';
         div.appendChild(div2);
 
+        
         const chk = document.createElement('input');
-        chk.className = 'form-check-input';
+        chk.className = this.inputType.class;
         chk.setAttribute('formControlName', this.inputType.key);
         chk.type = this.inputType.type;
         chk.id = this.inputType.key;
         div2.appendChild(chk);
-
-        const label = document.createElement('label');
-        label.className = 'form-check-label';
-        label.setAttribute("for", this.inputType.key);
-        label.innerText = this.inputType.label;
-        div2.appendChild(label);
         
+        const labelType = new label(new FormInputType({
+                class: 'form-check-label',
+                for: this.inputType.key,
+                label: this.inputType.label,
+                key: this.inputType.key}));
+        div2.appendChild(labelType.getInputType()); 
+        
+        console.log(div);
         return div;
     }
-    
+   
 }

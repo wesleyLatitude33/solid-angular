@@ -1,11 +1,12 @@
+import { Inject } from "@angular/core";
 import { FormInputType } from "./form-input-type.class";
+import { IInputType } from "./IInput-type.interface";
 
-export abstract class inputTypeBase {
-    inputType : FormInputType;
+export abstract class inputType{
+   inputType : IInputType;
 
-    constructor(inputType: FormInputType){
+   constructor(@Inject('IFormInput') inputType: IInputType){
         this.inputType = inputType;
-    }
-
-    abstract getInputType(): HTMLDivElement;
+   }
+    abstract getInputType(): HTMLElement;
 }

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { checkbox } from './input-type/checkbox.class';
 import { dropdpown } from './input-type/dropdown.class';
 import { FormInputType } from './input-type/form-input-type.class';
+import { IInputType } from './input-type/IInput-type.interface';
 import { radio } from './input-type/radio.class';
 import { textarea } from './input-type/textarea.class';
 import { textbox } from './input-type/textbox.class';
@@ -14,17 +15,17 @@ import { textbox } from './input-type/textbox.class';
 })
 export class FormInputComponent implements OnInit {
 
-  @Input() input: FormInputType;
+  @Input() input: any;
   @Input() form: FormGroup;
 
-  constructor(fb: FormBuilder, input: FormInputType) { 
+  constructor(fb: FormBuilder, @Inject('IFormInput') input: IInputType) { 
     this.form = fb.group({
       title: fb.control('initial value')
     });
-    this.input = input;
   }
 
   ngOnInit(): void {
+    this.initComponentHTML(this.input);
   }
 
   initComponentHTML (inputModel: FormInputType){
