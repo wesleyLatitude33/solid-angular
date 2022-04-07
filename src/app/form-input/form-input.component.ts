@@ -18,7 +18,7 @@ export class FormInputComponent implements OnInit {
   @Input() input: any;
   @Input() form: FormGroup;
 
-  constructor(fb: FormBuilder, @Inject('IFormInput') input: IInputType) { 
+  constructor(fb: FormBuilder) { 
     this.form = fb.group({
       title: fb.control('initial value')
     });
